@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="val" value="默认值2">
+    <button id="button">点击获取</button>
+    <button id="button2">随机的</button>
+
+    <div id="content"></div>
+
+    <script src="node_modules/identicon.js/pnglib.js"></script>
+    <script src="node_modules/identicon.js/identicon.js"></script>
+    <script src="node_modules/jssha/src/sha.js"></script>
+
+    <script>
+
+        var val = document.getElementById('val').value;
+
+        shaFn(val);
+
+        function shaFn (v) {
+            var shaObj = new jsSHA("SHA-1", "TEXT");
+            shaObj.update(v);
+            var hash = shaObj.getHash("HEX");
+            var data = new Identicon(hash, 420).toString();
+            document.getElementById('content').innerHTML = '<img width=420 height=420 src="data:image/png;base64,' + data + '">';
+        }
+
+        document.getElementById('button').onclick = function () {
+            val = document.getElementById('val').value;
+            console.log(val);
+            shaFn(val);
+        }
+
+        document.getElementById('button2').onclick = function () {
+            var numStr = (Math.random(0, 100) * 10000).toString();
+            shaFn(numStr);
+        }
+
+    </script>
+</body>
+</html>
